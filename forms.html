@@ -28,14 +28,17 @@
     <section class="content-section" aria-labelledby="forms-title">
       <p class="eyebrow">Лабораторна робота №5 · Варіант 5</p>
       <h2 id="forms-title">Зберіть своє замовлення</h2>
-      <p class="form-intro">Оберіть комплектуючі та заповніть контактні дані. Це навчальний приклад: перевірка й підсумок працюють у браузері, замовлення нікуди не надсилається.</p>
+      <p class="form-intro">Оберіть компоненти та заповніть контактні дані. Це навчальний приклад: перевірка й підсумок працюють у браузері, замовлення нікуди не надсилається.</p>
       <p class="required-note">Поля, позначені зірочкою (*), обов’язкові.</p>
       <noscript><p>Для локальної перевірки та підсумку увімкніть JavaScript. Без нього кнопки надсилання вимкнені.</p></noscript>
       <form id="order-form" name="order" autocomplete="on" action="#" class="order-form" dir="ltr" style="font-style: normal;" lang="uk">
         <fieldset id="contact-fields">
           <legend lang="uk" title="Контактні дані покупця" dir="ltr">1. Контактна інформація</legend>
           <div class="form-grid">
-            <div class="field"><label id="customer-label" for="customer" form="order-form" title="Від 2 до 80 символів">Ім’я та прізвище *</label>
+            <div class="field">
+              <!-- Атрибут form у label залишено на вимогу варіанта 5. -->
+              <!--suppress HtmlUnknownAttribute -->
+              <label id="customer-label" for="customer" form="order-form" title="Від 2 до 80 символів">Ім’я та прізвище *</label>
               <input id="customer" name="customer" type="text" required minlength="2" maxlength="80" autocomplete="name" autofocus style="font-weight: 400;" placeholder="Олена Коваль"></div>
             <div class="field"><label for="email">Email для підтвердження *</label>
               <input id="email" name="email" type="email" multiple required autocomplete="email" maxlength="160" placeholder="olena@example.com" aria-describedby="email-hint">
@@ -136,7 +139,9 @@ BM Vision    1</pre>
           <textarea id="operator-note" disabled dirname="operator-note.dir" lang="uk" title="Недоступне для редагування поле" class="disabled-text" style="resize: none;" rows="2">Навчальний каталог. Дані вигадані.</textarea>
           <button form="order-form" type="button" name="unavailable" disabled>Недоступна дія</button>
           <p>Застарілий тег keygen наведено за умовою; сучасний браузер не створює через нього ключі.</p>
-          <keygen id="legacy-keygen" dir="ltr" form="order-form" style="display: none;" lang="uk">
+          <!-- Застарілий keygen залишено лише на вимогу варіанта 5. -->
+          <!--suppress HtmlDeprecatedTag,XmlDeprecatedElement -->
+          <keygen id="legacy-keygen" dir="ltr" form="order-form" style="display: none;" lang="uk"></keygen>
           <p class="legacy-speech">Звукові властивості попередніх версій CSS наведено в forms.css для навчального прикладу.</p>
         </div>
       </details>
