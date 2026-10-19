@@ -122,10 +122,8 @@ def decorate(c,doc):
   for y,line in [(495.89,'ЗВІТ'),(470.89,'про виконання лабораторної роботи №5'),(445.89,'з дисципліни «Веб-програмування»')]: c.drawCentredString(A4[0]/2,y,line)
   c.setFont('ArialUA',12);c.drawCentredString(A4[0]/2,423.89,'Тема: Проєктування вебдокументів. Сторінка форм')
   author_lines=[(303.39,'Виконав: студент групи 241-А'),(284.39,'Гінчак Максим Богданович'),(265.39,'Перевірив:'),(246.39,'Нестеренко Володимир Васильович')]
-  author_width=max(pdfmetrics.stringWidth(line,'ArialUA',12) for _,line in author_lines)
-  author_center=538.9134-author_width/2
-  for y,line in author_lines: c.drawCentredString(author_center,y,line)
-  c.drawCentredString(A4[0]/2,139.39,'Чернівці · 2026')
+  for y,line in author_lines: c.drawRightString(538.9134,y,line)
+  c.drawCentredString(A4[0]/2,48,'Чернівці · 2026')
 
 SimpleDocTemplate(str(OUT),pagesize=A4,leftMargin=62.3622,rightMargin=50.3622,topMargin=56,bottomMargin=46,title='Лабораторна робота №5. HTML CSS. Варіант 5',author='Гінчак Максим Богданович').build(story,onFirstPage=decorate,onLaterPages=decorate)
 r=PdfReader(OUT)
