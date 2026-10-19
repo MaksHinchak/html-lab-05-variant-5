@@ -62,10 +62,7 @@ rows=[['№','Перевірка','Отриманий результат'],['1',
 t=Table([[p(escape(s),white if i==0 else cell) for s in row] for i,row in enumerate(rows)],colWidths=[28,166,WIDTH-194],hAlign='LEFT')
 t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),BLUE),('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.white,PALE]),('GRID',(0,0),(-1,-1),.5,LINE),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),6),('RIGHTPADDING',(0,0),(-1,-1),6),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7)]))
 story.append(t);story.append(Spacer(1,10))
-h('Висновки')
-paragraph('Реалізовано сторінку форм ByteMarket за варіантом №5. HTML-обмеження та JavaScript перевіряють формат і допустимі значення; результат виводиться локально. Перевірено пошук, розрахунок вартості, індикатори, скидання та мобільний вигляд у Chrome. У цій роботі новою є сторінка форм, а таблиця варіанта №5 з попередньої роботи збережена.')
-h('Репозиторій')
-paragraph('<link href="https://github.com/MaksHinchak/html-lab-05-variant-5" color="#174a7e">https://github.com/MaksHinchak/html-lab-05-variant-5</link>')
+
 page()
 example_start('Приклад 1. Контактні поля та їх перевірка')
 screenshot('contact-fields.png')
@@ -112,6 +109,13 @@ source('''form.addEventListener("submit", event => {
 paragraph('preventDefault зупиняє стандартне надсилання форми. reportValidity перевіряє всі поля. Підсумок формується через textContent: введений текст не виконується як HTML. Кнопки submit та image запускають однакову перевірку; кнопка reset очищує форму й приховує результат.')
 paragraph('Додаткові приклади шрифтів містяться в розділі «Шрифти та додаткові елементи варіанта 5». Keygen є застарілим елементом; звукові правила CSS2 наведено як навчальні декларації. Підтримка цих властивостей залежить від пристрою. Джерела: <link href="https://html.spec.whatwg.org/multipage/obsolete.html" color="#174a7e">WHATWG HTML</link>, <link href="https://www.w3.org/TR/CSS2/aural.html" color="#174a7e">W3C CSS2: Aural style sheets</link>.')
 
+story.append(KeepTogether([
+p('Висновки',heading),
+p('Реалізовано сторінку форм ByteMarket за варіантом №5. HTML-обмеження та JavaScript перевіряють формат і допустимі значення; результат виводиться локально. Перевірено пошук, розрахунок вартості, індикатори, скидання та мобільний вигляд у Chrome. У цій роботі новою є сторінка форм, а таблиця варіанта №5 з попередньої роботи збережена.'),
+p('Репозиторій',heading),
+p('<link href="https://github.com/MaksHinchak/html-lab-05-variant-5" color="#174a7e">https://github.com/MaksHinchak/html-lab-05-variant-5</link>')
+]))
+
 def decorate(c,doc):
  c.setFont('ArialUA',9); c.setFillColor(colors.HexColor('#587083'))
  c.drawRightString(538.9134,34,str(doc.page))
@@ -127,7 +131,10 @@ def decorate(c,doc):
 
 SimpleDocTemplate(str(OUT),pagesize=A4,leftMargin=62.3622,rightMargin=50.3622,topMargin=56,bottomMargin=46,title='Лабораторна робота №5. HTML CSS. Варіант 5',author='Гінчак Максим Богданович').build(story,onFirstPage=decorate,onLaterPages=decorate)
 r=PdfReader(OUT)
-assert len(r.pages)==6,len(r.pages)
+assert len(r.pages) in (6,7),len(r.pages)
+assert 'Висновки' in r.pages[-1].extract_text()
+assert 'Репозиторій' in r.pages[-1].extract_text()
+assert all('Висновки' not in p.extract_text() and 'Репозиторій' not in p.extract_text() for p in r.pages[:-1])
 for index,page_obj in enumerate(r.pages):
  assert len(page_obj.extract_text())>50
  assert abs(float(page_obj.mediabox.width)-A4[0])<1
@@ -135,4 +142,4 @@ links=[a.get_object().get('/A',{}).get('/URI') for pg in r.pages for a in pg.get
 assert 'https://github.com/MaksHinchak/html-lab-05-variant-5' in links
 copy2(OUT,DESKTOP)
 assert OUT.read_bytes()==DESKTOP.read_bytes()
-print('Created matching 6-page A4 report:',DESKTOP)
+print(f'Created {len(r.pages)}-page A4 report:',DESKTOP)
